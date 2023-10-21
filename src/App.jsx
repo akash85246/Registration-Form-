@@ -4,6 +4,7 @@ import UniversityBranchSelector from "./dropdown";
 import Checkbox from "./checkbox";
 import PasswordInput from "./password";
 import SubmitButton from "./button";
+import Gender from "./gender";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           nameId="age"
           placeholder="Enter your age"
         ></Input>
+        <Gender />
         <Input
           for="number"
           labelId="label-number"

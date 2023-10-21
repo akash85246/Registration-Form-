@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 
 const PasswordInput = () => {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordStrength, setPasswordStrength] = useState("Weak");
+
+  const handleUsernameChange = (e) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+  };
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
 
-    // Implement password strength validation logic
     if (newPassword.length >= 8) {
       setPasswordStrength("Strong");
     } else if (newPassword.length >= 6) {
@@ -26,6 +31,14 @@ const PasswordInput = () => {
 
   return (
     <div>
+      <label htmlFor="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        value={username}
+        onChange={handleUsernameChange}
+      />
+      <br />
       <label htmlFor="password">Password:</label>
       <input
         type="password"
