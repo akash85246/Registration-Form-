@@ -7,7 +7,7 @@ export default function Input(props){
             {props.label}
           </label>
           <section>
-            <input type={props.type} id={props.nameId} placeholder={props.placeholder} />
+            <input type={props.type} id={props.nameId}  />
           </section>
         </div>
       </>
