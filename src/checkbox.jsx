@@ -4,7 +4,7 @@ export default function Checkbox() {
       <label>College Year</label>
       <div className="radio">
         <label htmlFor="year-1">1</label>
-        <input type="radio" id="year-1" name="year" />
+        <input type="radio" id="year-1" name="year" required />
       </div>
       <div className="radio">
         <label htmlFor="year-2">2</label>

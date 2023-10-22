@@ -38,6 +38,7 @@ const PasswordInput = () => {
         value={username}
         onChange={handleUsernameChange}
       />
+      <div></div>
       <br />
       <label htmlFor="password">Password:</label>
       <input
@@ -46,6 +47,7 @@ const PasswordInput = () => {
         value={password}
         onChange={handlePasswordChange}
       />
+      <div></div>
       <br />
       <label htmlFor="confirmPassword">Confirm Password:</label>
       <input
@@ -54,7 +56,8 @@ const PasswordInput = () => {
         value={confirmPassword}
         onChange={handleConfirmPasswordChange}
       />
-      <div>Password Strength: {passwordStrength}</div>
+      <span id="pass" className="textDanger"> </span>
+      <div id="passwordStrength">Password Strength: {passwordStrength}</div>
     </div>
   );
 };

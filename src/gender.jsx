@@ -6,7 +6,7 @@ export default function Gender() {
       <label>Gender</label>
       <div className="radio">
         <label htmlFor="male">Male</label>
-        <input type="radio" id="male" name="gender" value="male" />
+        <input type="radio" id="male" name="gender" value="male" required />
       </div>
       <div className="radio">
         <label htmlFor="female">Female</label>
