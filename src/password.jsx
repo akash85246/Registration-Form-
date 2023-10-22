@@ -19,7 +19,6 @@ const PasswordInput = () => {
     } else {
       setUsernameError("");
     }
-
     setUsername(newUsername);
   };
 
@@ -63,15 +62,18 @@ const PasswordInput = () => {
         type="text"
         id="username"
         onChange={handleUsernameChange}
+        maxLength={10}
         required
       />
-      <span className="userError">{usernameError}</span>
+      {username&&(<span className="userError">{usernameError}</span>)}
       <br />
       <label htmlFor="password">Password:</label>
       <input
         type="password"
         id="password"
         onChange={handlePasswordChange}
+        maxLength={15}
+        minLength={5}
         required
       />
       <br />
@@ -80,12 +82,16 @@ const PasswordInput = () => {
         type="password"
         id="confirmPassword"
         onChange={handleConfirmPasswordChange}
+        maxLength={15}
+        minLength={5}
         required
       />
       <span id="pass" className="textDanger">
         {passwordMatchError}
       </span>
-      <div id="passwordStrength">Password Strength: {passwordStrength}</div>
+      {password && (
+        <div id="passwordStrength">Password Strength: {passwordStrength}</div>
+      )}
     </div>
   );
 };

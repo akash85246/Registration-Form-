@@ -7,11 +7,20 @@ export default function Input(props) {
           {props.label}
         </label>
         <section>
-          <input type={props.type} id={props.nameId} />
+          <input
+            type={props.type}
+            id={props.nameId}
+            maxLength={props.Length}
+            onChange={props.validateForm}
+            required
+          />
         </section>
-        <span id={props.spanId} className="textDanger">
-          {props.span}
-        </span>
+
+        {props.value !== "" ? ( // Conditionally render the <span> if value is not empty
+          <span id={props.spanId} className="textDanger">
+            {props.span}
+          </span>
+        ) : null}
       </div>
     </>
   );
