@@ -3,7 +3,7 @@ import React from "react";
 export default function Gender() {
   return (
     <div className="form-control">
-      <label>Gender</label>
+      <label>Sex</label>
       <div className="radio">
         <label htmlFor="male">Male</label>
         <input type="radio" id="male" name="gender" value="male" required />
