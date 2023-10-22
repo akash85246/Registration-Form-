@@ -6,11 +6,12 @@ import PasswordInput from "./password";
 import SubmitButton from "./button";
 import Gender from "./gender";
 import moment from "moment";
+import { useState } from "react";
 
 function validateForm(event) {
   event.preventDefault();
   var name = document.getElementById("name").value;
-  var mail = document.getElementById("email").value;
+  // var mail = document.getElementById("email").value;
 
   var number = document.getElementById("number").value;
 
@@ -31,13 +32,11 @@ function validateForm(event) {
     document.getElementById("nameError").innerHTML = "";
   } else {
     document.getElementById("nameError").innerHTML = "**Name is invalid";
-    return false;
   }
 
   if (!numberCheck.test(number)) {
     document.getElementById("numberError").innerHTML =
       "**Phone Number is invalid";
-    return false;
   } else {
     document.getElementById("numberError").innerHTML = "";
   }
@@ -46,7 +45,6 @@ function validateForm(event) {
     document.getElementById("sidError").innerHTML = "";
   } else {
     document.getElementById("sidError").innerHTML = "**Sudent ID is invalid";
-    return false;
   }
 
   if (rnoCheck.test(rno)) {
@@ -54,7 +52,7 @@ function validateForm(event) {
   } else {
     document.getElementById("rnoError").innerHTML =
       "**University Roll Number  is invalid";
-    return false;
+    
   }
 
   var dobString = date + "/" + month + "/" + year;
@@ -72,6 +70,21 @@ function validateForm(event) {
 }
 
 function App() {
+  const [email, setEmail] = useState("");
+
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+    if (emailRegex.test(newEmail)) {
+      document.getElementById("emailError").innerHTML = "";
+    } else {
+      document.getElementById("emailError").innerHTML =
+        "**Invalid email address";
+    }
+  };
   return (
     <>
       <Heading />
@@ -94,8 +107,10 @@ function App() {
           nameId="email"
           placeholder="Enter your email"
           spanId="emailError"
-          // onChange={handleEmailChange}
+          value={email}
+          onChange={handleEmailChange}
         ></Input>
+        <span id="emailError" className="textDanger"></span>
         <div>
           <label>Date of Birth</label>
           <input

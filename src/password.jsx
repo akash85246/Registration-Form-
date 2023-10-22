@@ -5,9 +5,20 @@ const PasswordInput = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordStrength, setPasswordStrength] = useState("Weak");
+  const [passwordMatchError, setPasswordMatchError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
 
   const handleUsernameChange = (e) => {
     const newUsername = e.target.value;
+    if (
+      newUsername.trim() === "" ||
+      !/^[A-Za-z. ]{1,30}([A-Za-z1-9._]{1,30})*$/.test(newUsername)
+    ) {
+      setUsernameError("Invalid username");
+    } else {
+      setUsernameError("");
+    }
+
     setUsername(newUsername);
   };
 
@@ -15,18 +26,34 @@ const PasswordInput = () => {
     const newPassword = e.target.value;
     setPassword(newPassword);
 
-    if (newPassword.length >= 8) {
+    const hasLetter = /[A-Za-z]/.test(newPassword);
+    const hasNumber = /\d/.test(newPassword);
+
+    if (newPassword.length >= 8 && hasLetter && hasNumber) {
       setPasswordStrength("Strong");
-    } else if (newPassword.length >= 6) {
+    } else if (newPassword.length >= 6 && (hasLetter || hasNumber)) {
       setPasswordStrength("Moderate");
     } else {
       setPasswordStrength("Weak");
+    }
+
+    if (newPassword !== confirmPassword) {
+      setPasswordMatchError("Passwords do not match");
+    } else {
+      setPasswordMatchError("");
     }
   };
 
   const handleConfirmPasswordChange = (e) => {
     const newConfirmPassword = e.target.value;
     setConfirmPassword(newConfirmPassword);
+
+    // Check if the password and confirm password match
+    if (password !== newConfirmPassword) {
+      setPasswordMatchError("Passwords do not match");
+    } else {
+      setPasswordMatchError("");
+    }
   };
 
   return (
@@ -35,28 +62,29 @@ const PasswordInput = () => {
       <input
         type="text"
         id="username"
-        value={username}
         onChange={handleUsernameChange}
+        required
       />
-      <div></div>
+      <span className="userError">{usernameError}</span>
       <br />
       <label htmlFor="password">Password:</label>
       <input
         type="password"
         id="password"
-        value={password}
         onChange={handlePasswordChange}
+        required
       />
-      <div></div>
       <br />
       <label htmlFor="confirmPassword">Confirm Password:</label>
       <input
         type="password"
         id="confirmPassword"
-        value={confirmPassword}
         onChange={handleConfirmPasswordChange}
+        required
       />
-      <span id="pass" className="textDanger"> </span>
+      <span id="pass" className="textDanger">
+        {passwordMatchError}
+      </span>
       <div id="passwordStrength">Password Strength: {passwordStrength}</div>
     </div>
   );
