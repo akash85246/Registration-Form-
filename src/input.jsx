@@ -1,10 +1,4 @@
 export default function Input(props) {
-  const handleBlur = (e) => {
-    if (props.onBlur) {
-      props.onBlur(e.target.value);
-    }
-  };
-
   return (
     <>
       <div className="form-control">
@@ -12,7 +6,7 @@ export default function Input(props) {
           {props.label}
         </label>
         <section>
-          <input type={props.type} id={props.nameId} onBlur={handleBlur} />
+          <input type={props.type} id={props.nameId} />
         </section>
         <span id={props.spanId} className="textDanger">
           {props.span}

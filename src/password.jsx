@@ -48,7 +48,6 @@ const PasswordInput = () => {
     const newConfirmPassword = e.target.value;
     setConfirmPassword(newConfirmPassword);
 
-    // Check if the password and confirm password match
     if (password !== newConfirmPassword) {
       setPasswordMatchError("Passwords do not match");
     } else {

@@ -6,12 +6,11 @@ import PasswordInput from "./password";
 import SubmitButton from "./button";
 import Gender from "./gender";
 import moment from "moment";
-import { useState } from "react";
 
 function validateForm(event) {
   event.preventDefault();
   var name = document.getElementById("name").value;
-  // var mail = document.getElementById("email").value;
+  var mail = document.getElementById("email").value;
 
   var number = document.getElementById("number").value;
 
@@ -20,6 +19,7 @@ function validateForm(event) {
 
   var rnoCheck = /^[^0]\d{12}$/;
   var sidCheck = /^[^0]\d{7}$/;
+  var mailCheck = /^[\w\.-]+@[\w\.-]+\.\w+$/;
 
   var date = document.getElementById("date").value;
   var month = document.getElementById("month").value;
@@ -52,7 +52,11 @@ function validateForm(event) {
   } else {
     document.getElementById("rnoError").innerHTML =
       "**University Roll Number  is invalid";
-    
+  }
+  if (mailCheck.test(mail)) {
+    document.getElementById("emailError").innerHTML = "";
+  } else {
+    document.getElementById("emailError").innerHTML = "**Mail  is invalid";
   }
 
   var dobString = date + "/" + month + "/" + year;
@@ -65,26 +69,10 @@ function validateForm(event) {
     console.log("h2");
     document.getElementById("dobError").innerHTML =
       "**Date of Birth is invalid";
-    return false;
   }
 }
 
 function App() {
-  const [email, setEmail] = useState("");
-
-  const handleEmailChange = (e) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
-    if (emailRegex.test(newEmail)) {
-      document.getElementById("emailError").innerHTML = "";
-    } else {
-      document.getElementById("emailError").innerHTML =
-        "**Invalid email address";
-    }
-  };
   return (
     <>
       <Heading />
@@ -107,10 +95,7 @@ function App() {
           nameId="email"
           placeholder="Enter your email"
           spanId="emailError"
-          value={email}
-          onChange={handleEmailChange}
         ></Input>
-        <span id="emailError" className="textDanger"></span>
         <div>
           <label>Date of Birth</label>
           <input
