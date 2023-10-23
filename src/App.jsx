@@ -12,10 +12,8 @@ import React, { useState } from "react";
 function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [dob, setDob] = useState("");
-  const [gender, setGender] = useState("");
+
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [universityBranch, setUniversityBranch] = useState("");
   const [studentId, setStudentId] = useState("");
   const [rno, setRno] = useState("");
 
@@ -23,90 +21,69 @@ function App() {
     e.preventDefault();
     console.log("Name:", name);
     console.log("Email:", email);
-    console.log("DOB:", dob);
     console.log("Phone Number:", phoneNumber);
-    console.log("University Branch:", universityBranch);
     console.log("Student ID:", studentId);
     console.log("Roll Number:", rno);
   };
 
   function validateForm(event) {
     event.preventDefault();
-    var name = document.getElementById("name").value;
-    var mail = document.getElementById("email").value;
 
-    var number = document.getElementById("number").value;
+    const name = document.getElementById("name").value;
+    const mail = document.getElementById("email").value;
+    const number = document.getElementById("number").value;
+    const rno = document.getElementById("rno").value;
+    const sid = document.getElementById("sid").value;
 
-    var rno = document.getElementById("rno").value;
-    var sid = document.getElementById("sid").value;
+    const rnoCheck = /^[^0]\d{12}$/;
+    const sidCheck = /^[^0]\d{7}$/;
+    const mailCheck = /^[\w\.-]+@[\w\.-]+\.\w+/;
+    const nameCheck = /^[A-Za-z. ]{3,30}( [A-Za-z. ]{3,30})*$/;
+    const numberCheck = /^[789]\d{9}$/;
 
-    var rnoCheck = /^[^0]\d{12}$/;
-    var sidCheck = /^[^0]\d{7}$/;
-    var mailCheck = /^[\w\.-]+@[\w\.-]+\.\w+$/;
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("numberError").innerHTML = "";
+    document.getElementById("sidError").innerHTML = "";
+    document.getElementById("rnoError").innerHTML = "";
 
-    var date = document.getElementById("date").value;
-    var month = document.getElementById("month").value;
-    var year = document.getElementById("year").value;
-    var nameCheck = /^[A-Za-z. ]{3,30}( [A-Za-z. ]{3,30})*$/;
-
-    var numberCheck = /^[789]{1}[0-9]{9}$/;
-
-    if (nameCheck.test(name)) {
-      document.getElementById("nameError").innerHTML = " ";
-      setName(name);
-    } else {
+    if (!nameCheck.test(name) && name != "") {
       document.getElementById("nameError").innerHTML =
-        "**Name cannot contain number";
-    }
-
-    if (!numberCheck.test(number)) {
-      document.getElementById("numberError").innerHTML =
-        "**Phone Number should start with 7/8/9 and should have 10 digit no character allowed";
+        "**Name cannot contain numbers and should be more than 2 characters";
     } else {
-      document.getElementById("numberError").innerHTML = "";
+      setName(name);
+    }
+    if (!mailCheck.test(mail) && mail != "") {
+      document.getElementById("emailError").innerHTML =
+        "**Email should have '@' and '.'";
+    } else {
+      setEmail(mail);
+    }
+    if (!numberCheck.test(number) && number != "") {
+      document.getElementById("numberError").innerHTML =
+        "**Phone Number should start with 7/8/9 and should have 10 digits, no characters allowed";
+    } else {
       setPhoneNumber(number);
     }
-
-    if (sidCheck.test(sid)) {
-      document.getElementById("sidError").innerHTML = "";
+    if (!sidCheck.test(sid) && sid != "") {
+      document.getElementById("sidError").innerHTML =
+        "**Student ID cannot start with 0 and should not have more than 7 digits";
+    } else {
       setStudentId(sid);
-    } else {
-      document.getElementById("sidError").innerHTML = "**Sudent ID is invalid";
     }
-
-    if (rnoCheck.test(rno)) {
-      document.getElementById("rnoError").innerHTML = "";
-      setRno(rno);
-    } else {
+    if (!rnoCheck.test(rno) && rno != "") {
       document.getElementById("rnoError").innerHTML =
-        "**University Roll Number  can have 13 digit number not starting with 0";
-    }
-    if (mailCheck.test(mail)) {
-      document.getElementById("emailError").innerHTML = "";
-      setEmail(mail);
+        "**University Roll Number can have 13 digits, not starting with 0";
     } else {
-      document.getElementById("emailError").innerHTML =
-        "**Mail  should have @ and .";
-    }
-
-    var dobString = date + "/" + month + "/" + year;
-    var dobMoment = moment(dobString, "DD/MM/YYYY", true);
-
-    if (dobMoment.isValid()) {
-      console.log("h1");
-      document.getElementById("dobError").innerHTML = "";
-      setDob(date + month + year);
-    } else {
-      console.log("h2");
-      document.getElementById("dobError").innerHTML =
-        "**Date of Birth is invalid";
+      setRno(rno);
     }
   }
+
 
   return (
     <>
       <Heading />
-      <form id="form " onSubmit={handleSubmit}>
+      <form id="form" onSubmit={handleSubmit}>
         <Input
           for="name"
           labelId="label-name"
@@ -114,10 +91,10 @@ function App() {
           type="text"
           nameId="name"
           spanId="nameError"
-          Length="20"
+          Length="30"
           span=""
           validateForm={validateForm}
-        ></Input>
+        />
         <Input
           for="email"
           labelId="label-email"
@@ -128,38 +105,7 @@ function App() {
           spanId="emailError"
           Length="40"
           validateForm={validateForm}
-        ></Input>
-        <div>
-          <label>Date of Birth</label>
-          <input
-            type="number"
-            placeholder="DD"
-            id="date"
-            max="31"
-            min="1"
-            onChange={validateForm}
-          ></input>
-          <span>/</span>
-          <input
-            type="number"
-            placeholder="MM"
-            id="month"
-            max="12"
-            min="1"
-            onChange={validateForm}
-          ></input>
-          <span>/</span>
-          <input
-            type="number"
-            placeholder="YYYY"
-            id="year"
-            max="2022"
-            min="1995"
-            onChange={validateForm}
-          ></input>
-        </div>
-
-        <span id="dobError" className="textDanger"></span>
+        />
         <Gender validateForm={validateForm} />
         <Input
           for="number"
@@ -170,20 +116,19 @@ function App() {
           spanId="numberError"
           Length="10"
           validateForm={validateForm}
-        ></Input>
+        />
         <UniversityBranchSelector />
-
         <Input
-          for="StudentId"
+          for="sid"
           labelId="label-SId"
-          label="Sudent ID"
+          label="Student ID"
           type="text"
           nameId="sid"
           placeholder="Enter your student id"
           spanId="sidError"
           Length="8"
           validateForm={validateForm}
-        ></Input>
+        />
         <Input
           for="rno"
           labelId="label-rno"
@@ -193,7 +138,7 @@ function App() {
           spanId="rnoError"
           Length="13"
           validateForm={validateForm}
-        ></Input>
+        />
         <Checkbox />
         <PasswordInput />
         <SubmitButton label="Submit Form" />

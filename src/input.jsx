@@ -16,7 +16,7 @@ export default function Input(props) {
           />
         </section>
 
-        {props.value !== "" ? ( // Conditionally render the <span> if value is not empty
+        {props.value !== "" ? (
           <span id={props.spanId} className="textDanger">
             {props.span}
           </span>
